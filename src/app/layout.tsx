@@ -35,6 +35,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        {/* Google tag (gtag.js) */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-S1LE3F1TNH"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-S1LE3F1TNH');
+            `,
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col bg-background text-foreground font-sans antialiased">
         <Providers>
           <LayoutClient>{children}</LayoutClient>
