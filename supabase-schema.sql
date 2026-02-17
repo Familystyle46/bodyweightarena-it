@@ -146,6 +146,16 @@ CREATE TRIGGER articles_updated_at
   BEFORE UPDATE ON articles
   FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
 
+-- Table contact_messages (formulaire de contact)
+CREATE TABLE contact_messages (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  email text NOT NULL,
+  subject text NOT NULL,
+  message text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+
 -- ============================================================
 -- Politiques RLS (Row Level Security) — à activer si tu veux
 -- restreindre l’accès par rôle. Sinon, la clé anon peut tout lire.
