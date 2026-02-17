@@ -1,101 +1,192 @@
-import Image from "next/image";
+import { createServerClient } from "@/lib/supabase/server"
+import Link from "next/link"
+import Image from "next/image"
+import { ArrowRight, Sparkles } from "lucide-react"
 
-export default function Home() {
+export default async function HomePage() {
+  const supabase = createServerClient()
+  let featured: { id: string; title: string; slug: string; sale_price: number; original_price: number; images: string[] }[] = []
+  let recent: { id: string; title: string; slug: string; sale_price: number; images: string[] }[] = []
+
+  if (supabase) {
+    const [resFeatured, resRecent] = await Promise.all([
+      supabase
+        .from("products")
+        .select("id, title, slug, sale_price, original_price, images")
+        .or("is_featured.eq.true,is_featured.is.null")
+        .or("is_active.eq.true,is_active.is.null")
+        .limit(8),
+      supabase
+        .from("products")
+        .select("id, title, slug, sale_price, images")
+        .or("is_active.eq.true,is_active.is.null")
+        .order("created_at", { ascending: false })
+        .limit(8),
+    ])
+    featured = resFeatured.data ?? []
+    recent = resRecent.data ?? []
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main>
+      {/* Bandeau promo */}
+      <div className="bg-primary py-2 text-center text-sm text-primary-foreground">
+        Livraison offerte dès 49€ d&apos;achat · Satisfaction garantie ou remboursé
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 py-16 md:py-24 lg:py-32">
+        <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+            <Sparkles className="h-4 w-4" />
+            Compléments 100% naturels
+          </div>
+          <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
+            Prenez soin de votre <span className="text-primary">bien-être</span> naturellement
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+            Découvrez notre sélection de compléments alimentaires naturels, fabriqués en France avec des ingrédients de
+            qualité premium pour votre équilibre au quotidien.
+          </p>
+          <div className="mt-8">
+            <Link
+              href="/produits"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
+            >
+              Découvrir les produits
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </section>
+
+      {/* Badges confiance */}
+      <section className="border-y bg-card py-8">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-8 px-4 md:gap-12">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <span className="text-2xl">🌿</span>
+            </div>
+            <span className="font-medium">100% Naturel</span>
+            <span className="text-xs text-muted-foreground">Ingrédients naturels</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <span className="text-2xl">🚚</span>
+            </div>
+            <span className="font-medium">Livraison rapide</span>
+            <span className="text-xs text-muted-foreground">24h/48h</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <span className="text-2xl">💬</span>
+            </div>
+            <span className="font-medium">Service client</span>
+            <span className="text-xs text-muted-foreground">Disponible 7j/7</span>
+          </div>
+          <div className="flex flex-col items-center gap-2 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <span className="text-2xl">🔒</span>
+            </div>
+            <span className="font-medium">Paiement sécurisé</span>
+            <span className="text-xs text-muted-foreground">Cryptage SSL</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Nos produits phares */}
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4 md:px-6">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold md:text-4xl">Nos produits phares</h2>
+            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+              Découvrez notre sélection de compléments alimentaires naturels, fabriqués en France avec des ingrédients de
+              qualité premium pour votre équilibre au quotidien.
+            </p>
+          </div>
+
+          {featured.length > 0 ? (
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {featured.map((p) => (
+                <li key={p.id}>
+                  <Link
+                    href={`/produits/${p.slug}`}
+                    className="block rounded-lg border p-4 transition hover:shadow-md"
+                  >
+                    {p.images?.[0] && (
+                      <div className="relative mb-3 aspect-square overflow-hidden rounded-md bg-muted">
+                        <Image
+                          src={p.images[0]}
+                          alt={p.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-medium">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {p.sale_price} €
+                      {p.original_price > p.sale_price && (
+                        <span className="ml-2 line-through">{p.original_price} €</span>
+                      )}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {recent.slice(0, 4).map((p) => (
+                <li key={p.id}>
+                  <Link
+                    href={`/produits/${p.slug}`}
+                    className="block rounded-lg border p-4 transition hover:shadow-md"
+                  >
+                    {p.images?.[0] && (
+                      <div className="relative mb-3 aspect-square overflow-hidden rounded-md bg-muted">
+                        <Image
+                          src={p.images[0]}
+                          alt={p.title}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                      </div>
+                    )}
+                    <h3 className="font-medium">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">{p.sale_price} €</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="mt-12 text-center">
+            <Link
+              href="/produits"
+              className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted"
+            >
+              Voir tous les produits
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="bg-primary py-16 text-center text-primary-foreground">
+        <div className="mx-auto max-w-xl px-4">
+          <h2 className="text-3xl font-bold md:text-4xl">Prêt à commencer votre cure ?</h2>
+          <p className="mt-4 opacity-90">Profitez de -20% sur votre première commande avec le code BIENVENUE</p>
+          <Link
+            href="/produits"
+            className="mt-8 inline-block rounded-lg bg-white px-6 py-3 text-sm font-medium text-primary hover:bg-white/90"
+          >
+            Découvrir le catalogue
+          </Link>
+        </div>
+      </section>
+    </main>
+  )
 }

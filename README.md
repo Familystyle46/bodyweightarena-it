@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pharmacie Provençale — Next.js 14 (ISR)
 
-## Getting Started
+Migration du site Lovable (Vite/React SPA) vers **Next.js 14 App Router** avec **ISR** pour le SEO.
 
-First, run the development server:
+## Démarrage
 
 ```bash
+cd pharmacie-provencale-next
+cp .env.local.example .env.local   # puis remplir les clés Supabase
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **`src/app/`** — Pages App Router (accueil, `/produits`, `/produits/[slug]`, `/categories/[slug]`, `/blog`, `/blog/[slug]`)
+- **`src/lib/supabase/`** — Client serveur (ISR) et client navigateur
+- **`src/types/`** — Types Supabase (products, articles, etc.)
+- **`src/components/seo/`** — JSON-LD Product pour les fiches produit
+- **`sitemap.xml`** et **`robots.txt`** — Générés dynamiquement
 
-## Learn More
+## Variables d’environnement
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Usage |
+|----------|--------|
+| `NEXT_PUBLIC_SUPABASE_URL` | URL du projet Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Clé anon (client + build) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Clé service (serveur uniquement, optionnel au build) |
+| `NEXT_PUBLIC_SITE_URL` | URL du site (sitemap, JSON-LD) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+Les pages produits, catégories et articles sont pré-générées (ISR avec `revalidate`).  
+Toutes les images utilisent `next/image` (lazy loading, formats optimisés).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Admin
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **`/auth`** — Connexion (rôle admin requis via `user_roles`).
+- **`/admin`** — Tableau produits / articles (toggle actif/publié, suppression, liens modifier/ajouter).
+- **`/admin/produits/nouveau`** et **`/admin/produits/[id]`** — Formulaire produit (nom, slug, description, prix, stock, catégorie, image, lien affilié, FAQ, actif).
+- **`/admin/articles/nouveau`** et **`/admin/articles/[id]`** — Formulaire article (titre, slug, extrait, contenu, catégorie, image de couverture, publié/brouillon).
+
+**Supabase Storage** : créer un bucket **`images`** (public) pour les uploads produits et articles. Chemins utilisés : `products/<uuid>.<ext>` et `articles/<uuid>.<ext>`.
+
+## Déploiement Vercel
+
+1. Lier le repo au projet Vercel.
+2. Ajouter les variables d’environnement (voir tableau ci-dessus).
+3. Domaine : `pharmacie-provencale.com` (DNS selon la doc Vercel).
+
+## Suite de la migration (Lovable)
+
+- Copier les composants depuis `../source/src/components/` vers `src/components/ui/` et `src/components/pharmacy/`.
+- Ajouter `"use client"` aux composants qui utilisent des hooks ou des événements.
+- Remplacer les `<img>` par `next/image` et vérifier les domaines dans `next.config.mjs`.

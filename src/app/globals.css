@@ -1,27 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
+
+/* Custom colors */
+:root {
+  --trustpilot-green: 152 69% 45%;
+}
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Nutra E-commerce Design System - Natural & Premium */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Primary - Sage Green (Natural, Wellness) */
+    --primary: 142 32% 42%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Background - Warm Cream/Beige */
+    --background: 40 30% 97%;
+    --foreground: 30 10% 15%;
+    
+    /* Card - Soft White */
+    --card: 0 0% 100%;
+    --card-foreground: 30 10% 15%;
+    
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 10% 15%;
+    
+    /* Secondary - Soft Blush Pink */
+    --secondary: 350 30% 95%;
+    --secondary-foreground: 350 40% 35%;
+    
+    /* Muted - Warm Gray */
+    --muted: 40 15% 93%;
+    --muted-foreground: 30 10% 45%;
+    
+    /* Accent - Gold/Warm Honey */
+    --accent: 38 70% 55%;
+    --accent-foreground: 0 0% 100%;
+    
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Success - Deeper Green */
+    --success: 142 50% 35%;
+    --success-foreground: 0 0% 100%;
+    
+    /* Warning - Soft Orange */
+    --warning: 25 90% 55%;
+    --warning-foreground: 0 0% 100%;
+    
+    /* Border & Input */
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 142 32% 42%;
+    
+    --radius: 0.5rem;
+    
+    /* Nutra specific tokens */
+    --nutra-cream: 40 40% 96%;
+    --nutra-sage: 142 32% 42%;
+    --nutra-sage-light: 142 25% 90%;
+    --nutra-blush: 350 30% 92%;
+    --nutra-gold: 38 70% 55%;
+    --nutra-charcoal: 30 10% 20%;
+    --nutra-warm-gray: 30 8% 60%;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 142 32% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 142 25% 95%;
+    --sidebar-accent-foreground: 142 32% 30%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 142 32% 42%;
+  }
+
+  .dark {
+    --background: 30 10% 8%;
+    --foreground: 40 30% 95%;
+    
+    --card: 30 10% 12%;
+    --card-foreground: 40 30% 95%;
+    
+    --popover: 30 10% 12%;
+    --popover-foreground: 40 30% 95%;
+    
+    --primary: 142 35% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 350 20% 18%;
+    --secondary-foreground: 350 30% 80%;
+    
+    --muted: 30 10% 18%;
+    --muted-foreground: 30 10% 60%;
+    
+    --accent: 38 60% 50%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 30 10% 20%;
+    --input: 30 10% 20%;
+    --ring: 142 35% 50%;
+    
+    --nutra-cream: 30 10% 15%;
+    --nutra-sage: 142 35% 50%;
+    --nutra-sage-light: 142 20% 20%;
+    --nutra-blush: 350 20% 20%;
+    --nutra-gold: 38 60% 50%;
+    --nutra-charcoal: 40 30% 90%;
+    --nutra-warm-gray: 30 8% 50%;
+    
+    --sidebar-background: 30 10% 10%;
+    --sidebar-foreground: 40 30% 90%;
+    --sidebar-primary: 142 35% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 142 20% 18%;
+    --sidebar-accent-foreground: 142 35% 70%;
+    --sidebar-border: 30 10% 20%;
+    --sidebar-ring: 142 35% 50%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .nutra-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium;
+  }
+  
+  .nutra-badge-green {
+    @apply bg-nutra-sage-light text-primary;
+  }
+  
+  .nutra-badge-gold {
+    @apply bg-amber-100 text-amber-800;
+  }
+  
+  .nutra-badge-pink {
+    @apply bg-nutra-blush text-secondary-foreground;
+  }
+  
+  .nutra-section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  
+  .nutra-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .nutra-gradient-text {
+    @apply bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .animate-marquee {
+    animation: marquee 25s linear infinite;
+  }
+  
+  .animate-countdown-pulse {
+    animation: countdown-pulse 1s ease-in-out infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes countdown-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
   }
 }
