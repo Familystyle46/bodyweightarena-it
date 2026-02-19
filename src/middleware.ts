@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 /**
- * Redirections SEO : http→https et www→canonique. Puis Supabase : session / cookies.
+ * Redirection SEO : www → canonique (sans www). HTTPS géré par Vercel. Puis Supabase : session / cookies.
  * les cookies. Sans cela, la session peut expirer et l’admin est déconnecté
  * au refresh ou en naviguant.
  */
@@ -13,10 +13,9 @@ const CANONICAL_HOST =
 function redirectToCanonical(request: NextRequest): NextResponse | null {
   const nextUrl = request.nextUrl
   const host = (request.headers.get("host") ?? "").toLowerCase()
-  const needsHttps = nextUrl.protocol === "http:"
-  const needsNoWww = host.startsWith("www.")
-
-  if (!needsHttps && !needsNoWww) return null
+  // Redirection www → non-www uniquement. Pas de redirection http→https ici :
+  // derrière Vercel le protocole peut être vu comme "http" et provoquer une boucle.
+  if (!host.startsWith("www.")) return null
 
   // Une seule redirection 301 vers l’URL canonique (évite chaîne http→https→sans www)
   const canonical = new URL(`https://${CANONICAL_HOST}${nextUrl.pathname}${nextUrl.search}`)
