@@ -156,6 +156,11 @@ CREATE TABLE contact_messages (
   created_at timestamptz NOT NULL DEFAULT now()
 );
 
+-- Si RLS est activé sur contact_messages, autoriser les insertions (formulaire public) :
+-- ALTER TABLE contact_messages ENABLE ROW LEVEL SECURITY;
+-- CREATE POLICY "Allow insert for contact form" ON contact_messages FOR INSERT TO anon WITH CHECK (true);
+-- (Recommandé : utiliser SUPABASE_SERVICE_ROLE_KEY côté API pour bypass RLS, pas de policy anon nécessaire.)
+
 -- ============================================================
 -- Politiques RLS (Row Level Security) — à activer si tu veux
 -- restreindre l’accès par rôle. Sinon, la clé anon peut tout lire.
