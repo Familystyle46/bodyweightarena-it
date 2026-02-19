@@ -2,7 +2,9 @@ import { createServerClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import Image from "next/image"
 import { Constants } from "@/types/supabase"
+import type { Database } from "@/types/supabase"
 
+type ProductCategory = Database["public"]["Enums"]["product_category"]
 const PRODUCT_CATEGORIES = Constants.public.Enums.product_category as readonly string[]
 
 /** Mapping article_category → product_category pour proposer des produits cohérents */
@@ -37,10 +39,10 @@ export async function RelatedProducts({ category }: { category: string }) {
   const supabase = createServerClient()
   if (!supabase) return null
 
-  const productCategory =
-    ARTICLE_TO_PRODUCT_CATEGORY[category] &&
-    PRODUCT_CATEGORIES.includes(ARTICLE_TO_PRODUCT_CATEGORY[category] as (typeof PRODUCT_CATEGORIES)[number])
-      ? ARTICLE_TO_PRODUCT_CATEGORY[category]
+  const rawCategory = ARTICLE_TO_PRODUCT_CATEGORY[category]
+  const productCategory: ProductCategory | null =
+    rawCategory && PRODUCT_CATEGORIES.includes(rawCategory)
+      ? (rawCategory as ProductCategory)
       : null
 
   let products: ProductRow[] = []
