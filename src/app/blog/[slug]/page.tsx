@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { MarkdownContent } from "@/components/content/MarkdownContent"
+import { RelatedProducts } from "@/components/blog/RelatedProducts"
 
 export const revalidate = 3600
 
@@ -96,6 +97,9 @@ export default async function BlogPostPage({
             className="mt-8"
           />
         </article>
+        <section className="mt-12 border-t pt-8">
+          <RelatedProducts category={article.category} />
+        </section>
       </div>
     </main>
   )
