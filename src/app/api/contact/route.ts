@@ -84,6 +84,7 @@ export async function POST(request: Request) {
       )
     }
 
+    let emailSent = false
     if (resendKey && contactEmail) {
       const resend = new Resend(resendKey)
       const { error: emailError } = await resend.emails.send({
@@ -102,12 +103,15 @@ export async function POST(request: Request) {
       if (emailError) {
         console.error("Resend email error:", emailError)
         // On ne fait pas échouer la requête : le message est déjà en base
+      } else {
+        emailSent = true
       }
     }
 
     return NextResponse.json({
       success: true,
       message: "Votre message a bien été envoyé.",
+      emailSent, // pour vérifier en dev que Resend a bien envoyé (onglet Network)
     })
   } catch (e) {
     console.error("POST /api/contact:", e)
