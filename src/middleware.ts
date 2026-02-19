@@ -2,30 +2,11 @@ import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
 
 /**
- * Redirection SEO : www → canonique (sans www). HTTPS géré par Vercel. Puis Supabase : session / cookies.
- * les cookies. Sans cela, la session peut expirer et l’admin est déconnecté
- * au refresh ou en naviguant.
+ * Middleware Supabase : session / cookies (rafraîchit le JWT pour l’admin).
+ * Aucune redirection www / https ici pour éviter les boucles sur Vercel.
+ * Pour forcer www → non-www, configurer la redirection dans Vercel (Settings → Domains).
  */
-const CANONICAL_HOST =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/^https?:\/\//, "").replace(/\/$/, "") ??
-  "pharmacie-provencale.com"
-
-function redirectToCanonical(request: NextRequest): NextResponse | null {
-  const nextUrl = request.nextUrl
-  const host = (request.headers.get("host") ?? "").toLowerCase()
-  // Redirection www → non-www uniquement. Pas de redirection http→https ici :
-  // derrière Vercel le protocole peut être vu comme "http" et provoquer une boucle.
-  if (!host.startsWith("www.")) return null
-
-  // Une seule redirection 301 vers l’URL canonique (évite chaîne http→https→sans www)
-  const canonical = new URL(`https://${CANONICAL_HOST}${nextUrl.pathname}${nextUrl.search}`)
-  return NextResponse.redirect(canonical, 301)
-}
-
 export async function middleware(request: NextRequest) {
-  const redirect = redirectToCanonical(request)
-  if (redirect) return redirect
-
   let supabaseResponse = NextResponse.next({ request })
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
