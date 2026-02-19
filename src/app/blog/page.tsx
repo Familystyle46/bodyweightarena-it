@@ -8,6 +8,7 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: "Blog",
   description: "Conseils santé, actualités et dossiers par la Pharmacie Provençale.",
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
 }
 
 export default async function BlogPage() {

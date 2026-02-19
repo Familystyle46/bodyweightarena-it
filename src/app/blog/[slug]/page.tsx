@@ -37,6 +37,7 @@ export async function generateMetadata({
   return {
     title: article.title,
     description: description || undefined,
+    robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
     openGraph: {
       title: article.title,
       description: description || undefined,
