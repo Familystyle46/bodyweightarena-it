@@ -2,11 +2,34 @@
 
 Si tu vois **« Erreur lors de l'enregistrement du message »** sur la preview ou la prod, l’insert Supabase échoue. Voici quoi vérifier.
 
+## Erreur « Could not find the 'name' column » (PGRST204)
+
+La table existe mais **les colonnes ne correspondent pas** à ce que l’API attend (ou le cache schéma Supabase est obsolète). Il faut que la table ait exactement : `id`, `name`, `email`, `subject`, `message`, `created_at`.
+
+**À faire dans Supabase → SQL Editor** : exécute le script suivant. Il supprime la table puis la recrée avec la bonne structure (les éventuels messages déjà en base seront perdus).
+
+```sql
+DROP TABLE IF EXISTS contact_messages;
+
+CREATE TABLE contact_messages (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  email text NOT NULL,
+  subject text NOT NULL,
+  message text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now()
+);
+```
+
+Ensuite, dans Supabase : **Project Settings** → **API** → bouton **Reload schema** (ou redémarre le projet) pour que le cache soit à jour. Puis refais un test d’envoi du formulaire.
+
+---
+
 ## 1. La table `contact_messages` existe
 
-Dans **Supabase** (le projet utilisé par Vercel) : **Table Editor** → tu dois voir une table **`contact_messages`**.
+Dans **Supabase** (le projet utilisé par Vercel) : **Table Editor** → tu dois voir une table **`contact_messages`** avec les colonnes `name`, `email`, `subject`, `message`, `created_at`.
 
-Si elle n’existe pas, exécute dans **SQL Editor** :
+Si la table n’existe pas du tout, exécute dans **SQL Editor** :
 
 ```sql
 CREATE TABLE contact_messages (
