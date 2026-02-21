@@ -8,7 +8,8 @@ import { ProductFAQ } from "@/components/product/ProductFAQ"
 import { ReviewsList } from "@/components/product/ReviewsList"
 import { MarkdownContent } from "@/components/content/MarkdownContent"
 
-export const revalidate = 3600
+// Revalidate toutes les 60s pour voir les mises à jour Supabase (traductions, etc.)
+export const revalidate = 60
 
 export async function generateStaticParams() {
   const supabase = createServerClient()

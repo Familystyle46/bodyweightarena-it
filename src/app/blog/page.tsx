@@ -51,7 +51,7 @@ const CATEGORY_BADGE_COLORS: Record<string, string> = {
 }
 
 function formatShortDate(iso: string) {
-  return new Date(iso).toLocaleDateString("fr-FR", {
+  return new Date(iso).toLocaleDateString("it-IT", {
     day: "numeric",
     month: "short",
     year: "numeric",

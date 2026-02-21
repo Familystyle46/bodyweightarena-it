@@ -6,7 +6,7 @@ import Image from "next/image"
 import { MarkdownContent } from "@/components/content/MarkdownContent"
 import { RelatedProducts } from "@/components/blog/RelatedProducts"
 
-export const revalidate = 3600
+export const revalidate = 60
 
 export async function generateStaticParams() {
   const supabase = createServerClient()
@@ -32,7 +32,7 @@ export async function generateMetadata({
     .select("title, meta_description, excerpt, cover_image")
     .eq("slug", slug)
     .single()
-  if (!article) return { title: "Article introuvable" }
+  if (!article) return { title: "Articolo non trovato" }
   const description =
     article.meta_description ?? article.excerpt?.slice(0, 160) ?? ""
   return {
@@ -88,7 +88,7 @@ export default async function BlogPostPage({
           <h1 className="text-3xl font-bold">{article.title}</h1>
           {article.published_at && (
             <p className="mt-2 text-sm text-muted-foreground">
-              {new Date(article.published_at).toLocaleDateString("fr-FR")}
+              {new Date(article.published_at).toLocaleDateString("it-IT")}
             </p>
           )}
           <MarkdownContent
