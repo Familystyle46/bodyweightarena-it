@@ -24,7 +24,7 @@ export function AdminLayoutClient({ children }: { children: React.ReactNode }) {
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary">
                 <Leaf className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span>Pharmacie Provençale</span>
+              <span>Bodyweight Arena</span>
             </Link>
             <span className="text-muted-foreground">Admin</span>
           </div>

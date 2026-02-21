@@ -21,16 +21,16 @@ CREATE TYPE article_category AS ENUM (
   'articulations',
   'cardio_tension',
   'parasites_immunite',
-  'transversal'
+  'transversal',
+  'energia'
 );
 
 CREATE TYPE product_category AS ENUM (
-  'equilibre',
-  'minceur',
-  'energie',
-  'beaute',
-  'immunite',
-  'digestion'
+  'integratori',
+  'dimagrire',
+  'massa_muscolare',
+  'energia',
+  'articolazioni'
 );
 
 -- Table products
@@ -43,7 +43,7 @@ CREATE TABLE products (
   original_price numeric NOT NULL,
   sale_price numeric NOT NULL,
   stock integer,
-  category product_category NOT NULL DEFAULT 'equilibre',
+  category product_category NOT NULL DEFAULT 'integratori',
   affiliate_link text NOT NULL,
   images text[] NOT NULL DEFAULT '{}',
   badges text[],

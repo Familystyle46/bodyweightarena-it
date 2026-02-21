@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       typeof message !== "string"
     ) {
       return NextResponse.json(
-        { success: false, error: "Tous les champs sont requis." },
+        { success: false, error: "Tutti i campi sono obbligatori." },
         { status: 400 }
       )
     }
@@ -29,21 +29,21 @@ export async function POST(request: Request) {
 
     if (!nameTrim) {
       return NextResponse.json(
-        { success: false, error: "Le nom est requis." },
+        { success: false, error: "Il nome è obbligatorio." },
         { status: 400 }
       )
     }
 
     if (!EMAIL_REGEX.test(emailTrim)) {
       return NextResponse.json(
-        { success: false, error: "Adresse email invalide." },
+        { success: false, error: "Indirizzo email non valido." },
         { status: 400 }
       )
     }
 
     if (!subjectTrim) {
       return NextResponse.json(
-        { success: false, error: "Le sujet est requis." },
+        { success: false, error: "L'oggetto è obbligatorio." },
         { status: 400 }
       )
     }
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           success: false,
-          error: `Le message doit contenir au moins ${MIN_MESSAGE_LENGTH} caractères.`,
+          error: `Il messaggio deve contenere almeno ${MIN_MESSAGE_LENGTH} caratteri.`,
         },
         { status: 400 }
       )
@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
     if (!supabase) {
       return NextResponse.json(
-        { success: false, error: "Configuration serveur indisponible." },
+        { success: false, error: "Configurazione server non disponibile." },
         { status: 503 }
       )
     }
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     if (insertError) {
       console.error("Supabase contact_messages insert:", insertError)
       return NextResponse.json(
-        { success: false, error: "Erreur lors de l'enregistrement du message." },
+        { success: false, error: "Errore durante il salvataggio del messaggio." },
         { status: 500 }
       )
     }
@@ -88,14 +88,14 @@ export async function POST(request: Request) {
     if (resendKey && contactEmail) {
       const resend = new Resend(resendKey)
       const { error: emailError } = await resend.emails.send({
-        from: "Pharmacie Provençale <onboarding@resend.dev>",
+        from: "Bodyweight Arena <onboarding@resend.dev>",
         to: contactEmail,
         replyTo: emailTrim,
         subject: `[Contact] ${subjectTrim}`,
         html: `
-          <p><strong>Nom :</strong> ${escapeHtml(nameTrim)}</p>
+          <p><strong>Nome :</strong> ${escapeHtml(nameTrim)}</p>
           <p><strong>Email :</strong> ${escapeHtml(emailTrim)}</p>
-          <p><strong>Sujet :</strong> ${escapeHtml(subjectTrim)}</p>
+          <p><strong>Oggetto :</strong> ${escapeHtml(subjectTrim)}</p>
           <p><strong>Message :</strong></p>
           <pre style="white-space: pre-wrap; font-family: inherit;">${escapeHtml(messageTrim)}</pre>
         `,
@@ -110,13 +110,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Votre message a bien été envoyé.",
+      message: "Il tuo messaggio è stato inviato.",
       emailSent, // pour vérifier en dev que Resend a bien envoyé (onglet Network)
     })
   } catch (e) {
     console.error("POST /api/contact:", e)
     return NextResponse.json(
-      { success: false, error: "Une erreur inattendue s'est produite." },
+      { success: false, error: "Si è verificato un errore imprevisto." },
       { status: 500 }
     )
   }

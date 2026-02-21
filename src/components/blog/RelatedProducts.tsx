@@ -7,23 +7,24 @@ import type { Database } from "@/types/supabase"
 type ProductCategory = Database["public"]["Enums"]["product_category"]
 const PRODUCT_CATEGORIES = Constants.public.Enums.product_category as readonly string[]
 
-/** Mapping article_category → product_category pour proposer des produits cohérents */
+/** Mapping article_category → product_category per prodotti correlati */
 const ARTICLE_TO_PRODUCT_CATEGORY: Record<string, string> = {
-  minceur_detox: "minceur",
-  detox_minceur: "minceur",
-  probiotiques_digestion: "digestion",
-  bien_etre: "equilibre",
-  nutrition: "equilibre",
-  sommeil_stress: "equilibre",
-  sommeil_confort: "equilibre",
-  sante_masculine: "equilibre",
-  glycemie_diabete: "equilibre",
-  articulations: "equilibre",
-  cardio_tension: "equilibre",
-  parasites_immunite: "immunite",
-  conseils: "equilibre",
-  actualites: "equilibre",
-  transversal: "equilibre",
+  minceur_detox: "dimagrire",
+  detox_minceur: "dimagrire",
+  probiotiques_digestion: "integratori",
+  bien_etre: "integratori",
+  nutrition: "integratori",
+  sommeil_stress: "energia",
+  sommeil_confort: "energia",
+  sante_masculine: "massa_muscolare",
+  glycemie_diabete: "integratori",
+  articulations: "articolazioni",
+  cardio_tension: "energia",
+  parasites_immunite: "integratori",
+  conseils: "integratori",
+  actualites: "integratori",
+  transversal: "integratori",
+  energia: "energia",
 }
 
 type ProductRow = {
@@ -72,7 +73,7 @@ export async function RelatedProducts({ category }: { category: string }) {
 
   return (
     <>
-      <h2 className="mb-6 text-xl font-semibold">Produits recommandés pour vous</h2>
+      <h2 className="mb-6 text-xl font-semibold">Prodotti consigliati</h2>
       <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {products.map((p) => (
           <li key={p.id}>

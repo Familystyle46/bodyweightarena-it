@@ -1,32 +1,33 @@
 import { createServerClient } from "@/lib/supabase/server"
-import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
+import type { Database } from "@/types/supabase"
 
-export const revalidate = 3600
+type ProductCategory = Database["public"]["Enums"]["product_category"]
 
-export const metadata: Metadata = {
-  title: "Tutti i prodotti",
-  description:
-    "Integratori alimentari: dimagrimento, massa muscolare, energia, articolazioni. Prodotti selezionati — Bodyweight Arena.",
+type Props = {
+  category: ProductCategory
+  title: string
+  description?: string
 }
 
-export default async function ProduitsPage() {
+export async function CategoryPageContent({ category, title, description }: Props): Promise<React.ReactElement | null> {
   const supabase = createServerClient()
-  let list: { id: string; title: string; slug: string; sale_price: number; original_price: number; images: string[]; category: string }[] = []
-  if (supabase) {
-    const { data: produits } = await supabase
-      .from("products")
-      .select("id, title, slug, sale_price, original_price, images, category")
-      .or("is_active.eq.true,is_active.is.null")
-      .order("created_at", { ascending: false })
-    list = produits ?? []
-  }
+  if (!supabase) return null
+  const { data: prodotti } = await supabase
+    .from("products")
+    .select("id, title, slug, sale_price, images")
+    .eq("category", category)
+    .or("is_active.eq.true,is_active.is.null")
+  const list = prodotti ?? []
 
   return (
     <main className="min-h-screen p-6 md:p-10">
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-8 text-3xl font-bold">Tutti i prodotti</h1>
+        <h1 className="mb-8 text-3xl font-bold">{title}</h1>
+        {description && (
+          <p className="mb-8 max-w-2xl text-muted-foreground">{description}</p>
+        )}
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {list.map((p) => (
             <li key={p.id}>
@@ -46,12 +47,7 @@ export default async function ProduitsPage() {
                   </div>
                 )}
                 <h2 className="font-medium">{p.title}</h2>
-                <p className="text-sm text-muted-foreground">
-                  {p.sale_price} €
-                  {p.original_price > p.sale_price && (
-                    <span className="ml-2 line-through">{p.original_price} €</span>
-                  )}
-                </p>
+                <p className="text-sm text-muted-foreground">{p.sale_price} €</p>
               </Link>
             </li>
           ))}

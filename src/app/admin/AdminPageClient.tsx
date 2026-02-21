@@ -11,12 +11,11 @@ type ProductRow = Database["public"]["Tables"]["products"]["Row"]
 type ArticleRow = Database["public"]["Tables"]["articles"]["Row"]
 
 const CATEGORY_LABELS: Record<string, string> = {
-  equilibre: "Équilibre",
-  minceur: "Minceur",
-  energie: "Énergie",
-  beaute: "Beauté",
-  immunite: "Immunité",
-  digestion: "Digestion",
+  integratori: "Integratori",
+  dimagrire: "Dimagrire",
+  massa_muscolare: "Massa muscolare",
+  energia: "Energia",
+  articolazioni: "Articolazioni",
 }
 
 export function AdminPageClient() {

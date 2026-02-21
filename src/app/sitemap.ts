@@ -1,12 +1,38 @@
 import type { MetadataRoute } from "next"
 import { createServerClient } from "@/lib/supabase/server"
-import { Constants } from "@/types/supabase"
 
 export const revalidate = 3600
 
+const CATEGORY_PATHS = [
+  "/integratori",
+  "/dimagrire",
+  "/massa-muscolare",
+  "/energia",
+  "/articolazioni",
+] as const
+
+/** Anciens permaliens à conserver pour le SEO (bodyweightarena.it) */
+const LEGACY_DATE_PATHS = [
+  "/2020/03/30/routine-stretching-full-body",
+  "/2019/01/18/3-motivi-per-cui-overcoming-gravity-e-un-ottimo-libro-e-per-cui-non-lo-e",
+  "/2017/11/30/front-lever-raises-tecnica-ed-errori-da-non-fare",
+  "/2017/10/16/programma-allenamento-front-lever",
+  "/2019/12/04/allenamento-skills-front-lever-livello-intermedio",
+  "/2019/10/23/allenamento-skills-planche-livello-intermedio",
+  "/2019/03/08/squat-migliora-la-flessibilita-con-questa-routine",
+  "/2016/10/12/split-routine-vs-full-body-routine",
+  "/2015/03/10/the-passive-and-active-hang",
+  "/2017/08/03/corpo-libero-e-pesi-come-integrarli",
+  "/2016/07/25/lo-scarico",
+  "/2019/03/29/metodo-di-allenamento-emom-allena-anche-la-forza",
+  "/2017/05/22/tecniche-di-aumento-forza-e-ipertrofia-a-corpo-libero",
+] as const
+
+const LEGACY_TAG_PATHS = ["/tag/project-invictus"] as const
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://pharmacie-provencale.com"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://bodyweightarena.it"
   const supabase = createServerClient()
   let produits: { slug: string; updated_at: string }[] | null = null
   let articles: { slug: string; updated_at: string }[] | null = null
@@ -36,12 +62,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  const categorySlugs = Constants.public.Enums.product_category
-  const categoryUrls = categorySlugs.map((slug) => ({
-    url: `${baseUrl}/categories/${slug}`,
+  const categoryUrls = CATEGORY_PATHS.map((path) => ({
+    url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.9,
+  }))
+
+  const legacyDateUrls = LEGACY_DATE_PATHS.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }))
+
+  const legacyTagUrls = LEGACY_TAG_PATHS.map((path) => ({
+    url: `${baseUrl}${path}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
   }))
 
   return [
@@ -64,6 +103,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     ...categoryUrls,
+    ...legacyDateUrls,
+    ...legacyTagUrls,
     ...productUrls,
     ...articleUrls,
   ]

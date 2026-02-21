@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation"
 import { Header } from "./Header"
 import { Footer } from "./Footer"
+import { CookieBanner } from "./CookieBanner"
 
 export function LayoutClient({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -13,6 +14,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
       {!isAdmin && <Header />}
       <div className="flex-1">{children}</div>
       {!isAdmin && <Footer />}
+      {!isAdmin && <CookieBanner />}
     </>
   )
 }

@@ -8,7 +8,7 @@ export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "Blog",
-  description: "Conseils santé, actualités et dossiers par la Pharmacie Provençale.",
+  description: "Consigli su integratori, dimagrimento, massa muscolare e benessere — Bodyweight Arena.",
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
 }
 
@@ -28,6 +28,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   cardio_tension: "Cardio & tension",
   parasites_immunite: "Immunité",
   transversal: "Transversal",
+  energia: "Energia",
 }
 
 const CATEGORY_BADGE_COLORS: Record<string, string> = {
@@ -46,6 +47,7 @@ const CATEGORY_BADGE_COLORS: Record<string, string> = {
   cardio_tension: "bg-red-100 text-red-800",
   parasites_immunite: "bg-green-100 text-green-800",
   transversal: "bg-slate-100 text-slate-800",
+  energia: "bg-amber-100 text-amber-800",
 }
 
 function formatShortDate(iso: string) {

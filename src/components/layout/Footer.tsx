@@ -6,47 +6,44 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 md:px-6">
         <div className="grid gap-8 md:grid-cols-4">
           <div>
-            <p className="font-semibold text-foreground">Pharmacie Provençale</p>
+            <p className="font-semibold text-foreground">Bodyweight Arena</p>
             <p className="mt-2 text-sm text-muted-foreground">
-              Découvrez notre sélection de compléments alimentaires naturels pour prendre soin de votre bien-être au quotidien.
+              Integratori alimentari, dimagrimento, massa muscolare, energia e articolazioni. Consigli e prodotti per il tuo benessere.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              contact@pharmacie-provencale.com<br />
-              04 42 00 00 00<br />
-              15 Cours Mirabeau, 13100 Aix-en-Provence
+              contact@bodyweightarena.it
             </p>
           </div>
           <div>
-            <p className="font-semibold text-foreground">Catégories</p>
+            <p className="font-semibold text-foreground">Categorie</p>
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li><Link href="/categories/equilibre" className="hover:text-foreground">Équilibre</Link></li>
-              <li><Link href="/categories/minceur" className="hover:text-foreground">Minceur</Link></li>
-              <li><Link href="/categories/energie" className="hover:text-foreground">Énergie</Link></li>
-              <li><Link href="/categories/beaute" className="hover:text-foreground">Beauté</Link></li>
-              <li><Link href="/categories/immunite" className="hover:text-foreground">Immunité</Link></li>
-              <li><Link href="/categories/digestion" className="hover:text-foreground">Digestion</Link></li>
+              <li><Link href="/integratori" className="hover:text-foreground">Integratori</Link></li>
+              <li><Link href="/dimagrire" className="hover:text-foreground">Dimagrire</Link></li>
+              <li><Link href="/massa-muscolare" className="hover:text-foreground">Massa muscolare</Link></li>
+              <li><Link href="/energia" className="hover:text-foreground">Energia</Link></li>
+              <li><Link href="/articolazioni" className="hover:text-foreground">Articolazioni</Link></li>
             </ul>
           </div>
           <div>
             <p className="font-semibold text-foreground">Navigation</p>
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li><Link href="/" className="hover:text-foreground">Accueil</Link></li>
-              <li><Link href="/produits" className="hover:text-foreground">Tous les produits</Link></li>
-              <li><Link href="/blog" className="hover:text-foreground">Blog & Conseils</Link></li>
-              <li><Link href="/contact" className="hover:text-foreground">Nous contacter</Link></li>
+              <li><Link href="/" className="hover:text-foreground">Home</Link></li>
+              <li><Link href="/produits" className="hover:text-foreground">Tutti i prodotti</Link></li>
+              <li><Link href="/blog" className="hover:text-foreground">Blog & Consigli</Link></li>
+              <li><Link href="/contact" className="hover:text-foreground">Contatti</Link></li>
             </ul>
           </div>
           <div>
-            <p className="font-semibold text-foreground">Informations</p>
+            <p className="font-semibold text-foreground">Informazioni</p>
             <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              <li><Link href="/mentions-legales" className="hover:text-foreground">Mentions légales</Link></li>
-              <li><Link href="/cgv" className="hover:text-foreground">Conditions de vente</Link></li>
-              <li><Link href="/confidentialite" className="hover:text-foreground">Politique de confidentialité</Link></li>
+              <li><Link href="/note-legali" className="hover:text-foreground">Note legali</Link></li>
+              <li><Link href="/condizioni" className="hover:text-foreground">Condizioni</Link></li>
+              <li><Link href="/privacy" className="hover:text-foreground">Privacy e cookie</Link></li>
             </ul>
           </div>
         </div>
         <p className="mt-8 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Pharmacie Provençale. Tous droits réservés. Site affilié.
+          © {new Date().getFullYear()} Bodyweight Arena. Tutti i diritti riservati. Sito in affiliazione.
         </p>
       </div>
     </footer>

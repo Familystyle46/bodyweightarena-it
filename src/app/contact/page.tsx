@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail } from "lucide-react"
 import { ContactForm } from "./ContactForm"
 
 export const metadata: Metadata = {
-  title: "Contactez-nous",
+  title: "Contatti",
   description:
-    "Une question sur nos compléments alimentaires ? Contactez l'équipe Pharmacie Provençale par email ou téléphone. Nous vous répondons sous 24h.",
+    "Domande sugli integratori? Contatta il team Bodyweight Arena via email. Ti rispondiamo al più presto.",
   robots: { index: false, follow: false },
 }
 
@@ -15,10 +15,10 @@ export default function ContactPage() {
       <div className="mx-auto max-w-5xl">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Contactez-nous
+            Contattaci
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            Une question ? N&apos;hésitez pas à nous contacter, notre équipe vous répondra dans les plus brefs délais.
+            Una domanda? Scrivici, il nostro team ti risponderà al più presto.
           </p>
         </div>
 
@@ -32,32 +32,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium">Email</h3>
                   <p className="text-sm text-muted-foreground">
-                    contact@pharmacie-provencale.com
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-lg border bg-card p-6">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <Phone className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Téléphone</h3>
-                  <p className="text-sm text-muted-foreground">04 42 00 00 00</p>
-                </div>
-              </div>
-            </div>
-            <div className="rounded-lg border bg-card p-6">
-              <div className="flex items-center gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                  <MapPin className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <h3 className="font-medium">Adresse</h3>
-                  <p className="text-sm text-muted-foreground">
-                    15 Cours Mirabeau<br />
-                    13100 Aix-en-Provence, France
+                    contact@bodyweightarena.it
                   </p>
                 </div>
               </div>
@@ -65,7 +40,7 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-lg border bg-card p-8 md:col-span-2">
-            <h2 className="mb-6 text-2xl font-bold">Envoyez-nous un message</h2>
+            <h2 className="mb-6 text-2xl font-bold">Inviaci un messaggio</h2>
             <ContactForm />
           </div>
         </div>

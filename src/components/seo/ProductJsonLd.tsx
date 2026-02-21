@@ -9,7 +9,7 @@ interface ProductJsonLdProps {
   }
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pharmacie-provencale.com"
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://bodyweightarena.it"
 
 export function ProductJsonLd({ produit }: ProductJsonLdProps) {
   const jsonLd = {

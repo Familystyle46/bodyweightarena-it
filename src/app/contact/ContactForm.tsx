@@ -25,12 +25,12 @@ export function ContactForm() {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setError(data.error ?? "Erreur lors de l'envoi.")
+        setError(data.error ?? "Errore durante l'invio.")
         return
       }
       setSent(true)
     } catch {
-      setError("Erreur lors de l'envoi.")
+      setError("Errore durante l'invio.")
     } finally {
       setLoading(false)
     }
@@ -39,8 +39,8 @@ export function ContactForm() {
   if (sent) {
     return (
       <div className="rounded-lg border border-green-200 bg-green-50 p-6 text-center text-green-800">
-        <p className="font-medium">Message envoyé !</p>
-        <p className="text-sm mt-1">Nous vous répondrons dans les plus brefs délais.</p>
+        <p className="font-medium">Messaggio inviato!</p>
+        <p className="text-sm mt-1">Ti risponderemo al più presto.</p>
       </div>
     )
   }
@@ -50,12 +50,12 @@ export function ContactForm() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor="name" className="text-sm font-medium">
-            Nom
+            Nome
           </label>
           <input
             id="name"
             name="name"
-            placeholder="Votre nom"
+            placeholder="Il tuo nome"
             required
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
@@ -68,7 +68,7 @@ export function ContactForm() {
             id="email"
             name="email"
             type="email"
-            placeholder="votre@email.com"
+            placeholder="tua@email.com"
             required
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           />
@@ -76,24 +76,24 @@ export function ContactForm() {
       </div>
       <div className="space-y-2">
         <label htmlFor="subject" className="text-sm font-medium">
-          Sujet
+          Oggetto
         </label>
         <input
           id="subject"
           name="subject"
-          placeholder="Sujet de votre message"
+          placeholder="Oggetto del messaggio"
           required
           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         />
       </div>
       <div className="space-y-2">
         <label htmlFor="message" className="text-sm font-medium">
-          Message
+          Messaggio
         </label>
         <textarea
           id="message"
           name="message"
-          placeholder="Votre message..."
+          placeholder="Il tuo messaggio..."
           rows={5}
           required
           className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
@@ -109,7 +109,7 @@ export function ContactForm() {
         disabled={loading}
         className="w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        {loading ? "Envoi en cours…" : "Envoyer le message"}
+        {loading ? "Invio in corso…" : "Invia messaggio"}
       </button>
     </form>
   )

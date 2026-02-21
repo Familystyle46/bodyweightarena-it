@@ -96,7 +96,7 @@ export default async function ProduitPage({
       />
       <div className="mx-auto max-w-4xl">
         <nav className="mb-6 text-sm text-muted-foreground">
-          <Link href="/produits">Produits</Link>
+          <Link href="/produits">Prodotti</Link>
           <span className="mx-2">/</span>
           <span>{produit.title}</span>
         </nav>
@@ -141,16 +141,16 @@ export default async function ProduitPage({
             {produit.affiliate_link &&
               (produit.stock === 0 ? (
                 <span className="mt-6 flex w-full cursor-not-allowed items-center justify-center rounded-lg bg-muted px-4 py-3 text-center font-medium text-muted-foreground">
-                  Rupture de stock
+                  Esaurito
                 </span>
               ) : (
                 <a
                   href={produit.affiliate_link}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer sponsored"
                   className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-center font-medium text-primary-foreground hover:opacity-90"
                 >
-                  Commander maintenant
+                  Acquista ora
                 </a>
               ))}
           </div>

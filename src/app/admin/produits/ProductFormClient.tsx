@@ -49,7 +49,7 @@ export function ProductFormClient({ initialData }: ProductFormClientProps) {
   const [stock, setStock] = useState(String(initialData?.stock ?? ""))
   const [category, setCategory] = useState<
     (typeof Constants.public.Enums.product_category)[number]
-  >(initialData?.category ?? "equilibre")
+  >(initialData?.category ?? "integratori")
   const [affiliateLink, setAffiliateLink] = useState(
     initialData?.affiliate_link ?? ""
   )
@@ -240,7 +240,7 @@ export function ProductFormClient({ initialData }: ProductFormClientProps) {
       setOriginalPrice("")
       setSalePrice("")
       setStock("")
-      setCategory("equilibre")
+      setCategory("integratori")
       setAffiliateLink("")
       setIsActive(true)
       setIsFeatured(false)

@@ -31,7 +31,7 @@ export default async function HomePage() {
     <main>
       {/* Bandeau promo */}
       <div className="bg-primary py-2 text-center text-sm text-primary-foreground">
-        Livraison offerte dès 49€ d&apos;achat · Satisfaction garantie ou remboursé
+        Spedizione veloce · Soddisfatti o rimborsati
       </div>
 
       {/* Hero */}
@@ -39,21 +39,20 @@ export default async function HomePage() {
         <div className="mx-auto max-w-3xl px-4 text-center md:px-6">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
             <Sparkles className="h-4 w-4" />
-            Compléments 100% naturels
+            Integratori e nutraceutica
           </div>
           <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-5xl lg:text-6xl">
-            Prenez soin de votre <span className="text-primary">bien-être</span> naturellement
+            Il tuo <span className="text-primary">benessere</span> al centro
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Découvrez notre sélection de compléments alimentaires naturels, fabriqués en France avec des ingrédients de
-            qualité premium pour votre équilibre au quotidien.
+            Integratori per dimagrimento, massa muscolare, energia e articolazioni. Prodotti selezionati in affiliazione per sport e benessere.
           </p>
           <div className="mt-8">
             <Link
               href="/produits"
               className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
             >
-              Découvrir les produits
+              Scopri i prodotti
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -67,41 +66,40 @@ export default async function HomePage() {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <span className="text-2xl">🌿</span>
             </div>
-            <span className="font-medium">100% Naturel</span>
-            <span className="text-xs text-muted-foreground">Ingrédients naturels</span>
+            <span className="font-medium">Qualità</span>
+            <span className="text-xs text-muted-foreground">Prodotti selezionati</span>
           </div>
           <div className="flex flex-col items-center gap-2 text-center">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <span className="text-2xl">🚚</span>
             </div>
-            <span className="font-medium">Livraison rapide</span>
-            <span className="text-xs text-muted-foreground">24h/48h</span>
+            <span className="font-medium">Spedizione rapida</span>
+            <span className="text-xs text-muted-foreground">24/48h</span>
           </div>
           <div className="flex flex-col items-center gap-2 text-center">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <span className="text-2xl">💬</span>
             </div>
-            <span className="font-medium">Service client</span>
-            <span className="text-xs text-muted-foreground">Disponible 7j/7</span>
+            <span className="font-medium">Assistenza</span>
+            <span className="text-xs text-muted-foreground">Sempre disponibile</span>
           </div>
           <div className="flex flex-col items-center gap-2 text-center">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
               <span className="text-2xl">🔒</span>
             </div>
-            <span className="font-medium">Paiement sécurisé</span>
-            <span className="text-xs text-muted-foreground">Cryptage SSL</span>
+            <span className="font-medium">Pagamento sicuro</span>
+            <span className="text-xs text-muted-foreground">SSL</span>
           </div>
         </div>
       </section>
 
-      {/* Nos produits phares */}
+      {/* Prodotti in evidenza */}
       <section className="py-16 md:py-24">
         <div className="mx-auto max-w-6xl px-4 md:px-6">
           <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold md:text-4xl">Nos produits phares</h2>
+            <h2 className="text-3xl font-bold md:text-4xl">I nostri prodotti in evidenza</h2>
             <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Découvrez notre sélection de compléments alimentaires naturels, fabriqués en France avec des ingrédients de
-              qualité premium pour votre équilibre au quotidien.
+              Integratori per dimagrimento, massa muscolare, energia e articolazioni. Scelta orientata alla qualità e al risultato.
             </p>
           </div>
 
@@ -167,7 +165,7 @@ export default async function HomePage() {
               href="/produits"
               className="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium hover:bg-muted"
             >
-              Voir tous les produits
+              Vedi tutti i prodotti
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -177,13 +175,13 @@ export default async function HomePage() {
       {/* CTA */}
       <section className="bg-primary py-16 text-center text-primary-foreground">
         <div className="mx-auto max-w-xl px-4">
-          <h2 className="text-3xl font-bold md:text-4xl">Prêt à commencer votre cure ?</h2>
-          <p className="mt-4 opacity-90">Profitez de -20% sur votre première commande avec le code BIENVENUE</p>
+          <h2 className="text-3xl font-bold md:text-4xl">Pronto a iniziare?</h2>
+          <p className="mt-4 opacity-90">Scopri gli integratori più adatti ai tuoi obiettivi</p>
           <Link
             href="/produits"
             className="mt-8 inline-block rounded-lg bg-white px-6 py-3 text-sm font-medium text-primary hover:bg-white/90"
           >
-            Découvrir le catalogue
+            Vai al catalogo
           </Link>
         </div>
       </section>

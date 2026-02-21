@@ -3,24 +3,37 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
-import { Constants } from "@/types/supabase"
 import type { Database } from "@/types/supabase"
 
 export const revalidate = 7200
 
-const CATEGORY_SLUGS = Constants.public.Enums.product_category
-
-export async function generateStaticParams() {
-  return CATEGORY_SLUGS.map((slug) => ({ slug }))
+// URL slug (può avere trattino) -> valore enum DB
+const SLUG_TO_CATEGORY: Record<string, Database["public"]["Enums"]["product_category"]> = {
+  integratori: "integratori",
+  dimagrire: "dimagrire",
+  "massa-muscolare": "massa_muscolare",
+  energia: "energia",
+  articolazioni: "articolazioni",
 }
 
-const categoryLabels: Record<string, string> = {
-  equilibre: "Équilibre",
-  minceur: "Minceur",
-  energie: "Énergie",
-  beaute: "Beauté",
-  immunite: "Immunité",
-  digestion: "Digestion",
+const CATEGORY_LABELS: Record<string, string> = {
+  integratori: "Integratori",
+  dimagrire: "Dimagrire",
+  massa_muscolare: "Massa muscolare",
+  energia: "Energia",
+  articolazioni: "Articolazioni",
+}
+
+const STATIC_PARAMS = [
+  { slug: "integratori" },
+  { slug: "dimagrire" },
+  { slug: "massa-muscolare" },
+  { slug: "energia" },
+  { slug: "articolazioni" },
+] as const
+
+export async function generateStaticParams() {
+  return STATIC_PARAMS.map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({
@@ -29,12 +42,12 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  if (!(CATEGORY_SLUGS as readonly string[]).includes(slug))
-    return { title: "Catégorie introuvable" }
-  const nom = categoryLabels[slug] ?? slug
+  const category = SLUG_TO_CATEGORY[slug]
+  if (!category) return { title: "Categoria non trovata" }
+  const nom = CATEGORY_LABELS[category] ?? slug
   return {
     title: nom,
-    description: `Produits de la catégorie ${nom} — Pharmacie Provençale.`,
+    description: `Prodotti della categoria ${nom} — Bodyweight Arena. Integratori e nutraceutica.`,
   }
 }
 
@@ -44,24 +57,24 @@ export default async function CategoriePage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  if (!(CATEGORY_SLUGS as readonly string[]).includes(slug)) notFound()
+  const category = SLUG_TO_CATEGORY[slug]
+  if (!category) notFound()
 
   const supabase = createServerClient()
   if (!supabase) notFound()
-  const category = slug as Database["public"]["Enums"]["product_category"]
-  const { data: produits } = await supabase
+  const { data: prodotti } = await supabase
     .from("products")
     .select("id, title, slug, sale_price, images")
     .eq("category", category)
     .or("is_active.eq.true,is_active.is.null")
 
-  const list = produits ?? []
-  const nom = categoryLabels[slug] ?? slug
+  const list = prodotti ?? []
+  const nom = CATEGORY_LABELS[category] ?? slug
 
   return (
     <main className="min-h-screen p-6 md:p-10">
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-8 text-3xl font-bold">Catégorie : {nom}</h1>
+        <h1 className="mb-8 text-3xl font-bold">Categoria: {nom}</h1>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {list.map((p) => (
             <li key={p.id}>

@@ -298,13 +298,13 @@ export type Database = {
         | "cardio_tension"
         | "parasites_immunite"
         | "transversal"
+        | "energia"
       product_category:
-        | "equilibre"
-        | "minceur"
-        | "energie"
-        | "beaute"
-        | "immunite"
-        | "digestion"
+        | "integratori"
+        | "dimagrire"
+        | "massa_muscolare"
+        | "energia"
+        | "articolazioni"
     }
     CompositeTypes: { [_ in never]: never }
   }
@@ -335,14 +335,14 @@ export const Constants = {
         "cardio_tension",
         "parasites_immunite",
         "transversal",
+        "energia",
       ] as const,
       product_category: [
-        "equilibre",
-        "minceur",
-        "energie",
-        "beaute",
-        "immunite",
-        "digestion",
+        "integratori",
+        "dimagrire",
+        "massa_muscolare",
+        "energia",
+        "articolazioni",
       ] as const,
     },
   },

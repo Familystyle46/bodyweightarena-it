@@ -5,17 +5,17 @@ import { LayoutClient } from "@/components/layout/LayoutClient"
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Pharmacie Provençale",
-    default: "Pharmacie Provençale — Produits de santé et parapharmacie",
+    template: "%s | Bodyweight Arena",
+    default: "Bodyweight Arena — Integratori, dimagrimento, massa muscolare e benessere",
   },
   description:
-    "Votre pharmacie en ligne : médicaments, parapharmacie, conseils santé.",
+    "Integratori alimentari, consigli su dimagrimento, massa muscolare, energia e articolazioni. Prodotti selezionati in affiliazione per il tuo benessere.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://pharmacie-provencale.com"
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://bodyweightarena.it"
   ),
   openGraph: {
-    siteName: "Pharmacie Provençale",
-    locale: "fr_FR",
+    siteName: "Bodyweight Arena",
+    locale: "it_IT",
     type: "website",
   },
   robots: {
@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
+    <html lang="it">
       <head>
         {/* Google tag (gtag.js) */}
         <script

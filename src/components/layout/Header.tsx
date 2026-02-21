@@ -10,7 +10,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2 font-semibold text-foreground">
           <Image
             src="/logo.png"
-            alt="Pharmacie Provençale"
+            alt="Bodyweight Arena"
             width={180}
             height={48}
             className="h-10 w-auto object-contain md:h-12"
@@ -19,16 +19,16 @@ export function Header() {
         </Link>
         <nav className="flex items-center gap-6 text-sm font-medium">
           <Link href="/" className="text-muted-foreground transition hover:text-foreground">
-            Accueil
+            Home
           </Link>
           <Link href="/produits" className="text-muted-foreground transition hover:text-foreground">
-            Catalogue
+            Prodotti
           </Link>
           <Link href="/blog" className="text-muted-foreground transition hover:text-foreground">
             Blog
           </Link>
           <Link href="/contact" className="text-muted-foreground transition hover:text-foreground">
-            Contact
+            Contatti
           </Link>
           <Link
             href="/admin"
