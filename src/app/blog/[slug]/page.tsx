@@ -28,7 +28,7 @@ export async function generateStaticParams() {
     .or("is_published.eq.true,is_published.is.null")
     .limit(500)
   const slugs = (articles ?? []).map((a) => normalizeSlugForLookup(a.slug))
-  const unique = [...new Set(slugs)]
+  const unique = Array.from(new Set(slugs))
   return unique.map((slug) => ({ slug }))
 }
 
