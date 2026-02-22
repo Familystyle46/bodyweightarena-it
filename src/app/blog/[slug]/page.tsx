@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { MarkdownContent } from "@/components/content/MarkdownContent"
 import { RelatedProducts } from "@/components/blog/RelatedProducts"
+import { getArticleBySlug } from "@/lib/supabase/articles"
 
 export const revalidate = 60
 
@@ -27,11 +28,7 @@ export async function generateMetadata({
   const { slug } = await params
   const supabase = createServerClient()
   if (!supabase) return { title: "Blog" }
-  const { data: article } = await supabase
-    .from("articles")
-    .select("title, meta_description, excerpt, cover_image")
-    .eq("slug", slug)
-    .single()
+  const article = await getArticleBySlug(supabase, slug)
   if (!article) return { title: "Articolo non trovato" }
   const description =
     article.meta_description ?? article.excerpt?.slice(0, 160) ?? ""
@@ -56,12 +53,7 @@ export default async function BlogPostPage({
   const { slug } = await params
   const supabase = createServerClient()
   if (!supabase) notFound()
-  const { data: article } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("slug", slug)
-    .or("is_published.eq.true,is_published.is.null")
-    .single()
+  const article = await getArticleBySlug(supabase, slug)
   if (!article) notFound()
 
   return (
