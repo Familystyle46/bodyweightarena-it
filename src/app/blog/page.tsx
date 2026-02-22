@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
+import { normalizeSlugForLookup } from "@/lib/utils"
 
 export const revalidate = 3600
 
@@ -13,21 +14,21 @@ export const metadata: Metadata = {
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
-  bien_etre: "Bien-être",
-  nutrition: "Nutrition",
-  conseils: "Conseils",
-  actualites: "Actualités",
-  probiotiques_digestion: "Digestion",
-  sommeil_stress: "Sommeil & stress",
-  minceur_detox: "Minceur & détox",
-  sommeil_confort: "Sommeil",
-  sante_masculine: "Santé masculine",
-  detox_minceur: "Détox & minceur",
-  glycemie_diabete: "Glycémie",
-  articulations: "Articulations",
-  cardio_tension: "Cardio & tension",
-  parasites_immunite: "Immunité",
-  transversal: "Transversal",
+  bien_etre: "Benessere",
+  nutrition: "Nutrizione",
+  conseils: "Consigli",
+  actualites: "Attualità",
+  probiotiques_digestion: "Digestione",
+  sommeil_stress: "Sonno e stress",
+  minceur_detox: "Dimagrimento e detox",
+  sommeil_confort: "Sonno",
+  sante_masculine: "Salute maschile",
+  detox_minceur: "Detox e dimagrimento",
+  glycemie_diabete: "Glicemia e diabete",
+  articulations: "Articolazioni",
+  cardio_tension: "Cardio e pressione",
+  parasites_immunite: "Immunità",
+  transversal: "Trasversale",
   energia: "Energia",
 }
 
@@ -89,7 +90,7 @@ export default async function BlogPage() {
           {list.map((a) => (
             <li key={a.id}>
               <Link
-                href={`/blog/${a.slug}`}
+                href={`/blog/${normalizeSlugForLookup(a.slug)}`}
                 className="flex h-full flex-col overflow-hidden rounded-lg border bg-white transition hover:shadow-xl"
               >
                 {a.cover_image ? (
@@ -126,7 +127,7 @@ export default async function BlogPage() {
                       </time>
                     )}
                     <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
-                      Lire la suite
+                      Leggi tutto
                       <ArrowRight className="h-4 w-4 shrink-0" />
                     </span>
                   </div>

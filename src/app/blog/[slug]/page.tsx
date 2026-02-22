@@ -1,13 +1,23 @@
 import { createServerClient } from "@/lib/supabase/server"
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { MarkdownContent } from "@/components/content/MarkdownContent"
 import { RelatedProducts } from "@/components/blog/RelatedProducts"
 import { getArticleBySlug } from "@/lib/supabase/articles"
+import { normalizeSlugForLookup } from "@/lib/utils"
 
 export const revalidate = 60
+
+function decodeSlug(slug: string): string {
+  if (!slug.includes("%")) return slug
+  try {
+    return decodeURIComponent(slug)
+  } catch {
+    return slug
+  }
+}
 
 export async function generateStaticParams() {
   const supabase = createServerClient()
@@ -16,8 +26,10 @@ export async function generateStaticParams() {
     .from("articles")
     .select("slug")
     .or("is_published.eq.true,is_published.is.null")
-    .limit(100)
-  return (articles ?? []).map((a) => ({ slug: a.slug }))
+    .limit(500)
+  const slugs = (articles ?? []).map((a) => normalizeSlugForLookup(a.slug))
+  const unique = [...new Set(slugs)]
+  return unique.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({
@@ -25,7 +37,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
+  const slug = decodeSlug(rawSlug)
   const supabase = createServerClient()
   if (!supabase) return { title: "Blog" }
   const article = await getArticleBySlug(supabase, slug)
@@ -50,11 +63,18 @@ export default async function BlogPostPage({
 }: {
   params: Promise<{ slug: string }>
 }) {
-  const { slug } = await params
+  const { slug: rawSlug } = await params
+  const slug = decodeSlug(rawSlug)
   const supabase = createServerClient()
   if (!supabase) notFound()
   const article = await getArticleBySlug(supabase, slug)
   if (!article) notFound()
+
+  // Rediriger vers l’URL canonique (sans accents) pour cohérence et SEO
+  const canonicalSlug = normalizeSlugForLookup(article.slug)
+  if (canonicalSlug !== slug && normalizeSlugForLookup(slug) === canonicalSlug) {
+    redirect(`/blog/${canonicalSlug}`)
+  }
 
   return (
     <main className="min-h-screen p-6 md:p-10">

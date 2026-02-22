@@ -20,17 +20,15 @@ export async function getArticleBySlug(
     .single()
   if (exact) return exact
 
-  // 2) Slug normalisé (sans accents)
+  // 2) Slug normalisé (sans accents) — la base a souvent les slugs sans accents
   const normalized = normalizeSlugForLookup(slug)
-  if (normalized !== slug) {
-    const { data: byNormalized } = await supabase
-      .from("articles")
-      .select("*")
-      .eq("slug", normalized)
-      .or("is_published.eq.true,is_published.is.null")
-      .single()
-    if (byNormalized) return byNormalized
-  }
+  const { data: byNormalized } = await supabase
+    .from("articles")
+    .select("*")
+    .eq("slug", normalized)
+    .or("is_published.eq.true,is_published.is.null")
+    .single()
+  if (byNormalized) return byNormalized
 
   // 3) Fallback : charger les articles et matcher par slug normalisé (préfixe ou égal)
   // Gère les cas : slug en base = "....-medicale", URL = "....-medical" ou slug tronqué
