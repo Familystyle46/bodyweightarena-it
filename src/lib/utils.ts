@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export function normalizeSlugForLookup(slug: string): string {
   return slug
     .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[\u0300-\u036f]/g, "")
 }
 
 /** Cherche un article par slug exact ou slug normalisé (sans accents) */
